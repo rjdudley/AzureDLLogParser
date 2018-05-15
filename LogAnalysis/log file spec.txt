@@ -1,0 +1,25 @@
+ /*
+https://blogs.msdn.microsoft.com/visualstudio/2015/09/28/introducing-u-sql-a-language-that-makes-big-data-processing-easy/
+https://saveenr.gitbooks.io/usql-tutorial/content/
+https://msdn.microsoft.com/en-us/azure/data-lake-analytics/u-sql/u-sql-built-in-extractors
+
+Common Log Format = https://en.wikipedia.org/wiki/Common_Log_Format
+https://www.w3.org/Daemon/User/Config/Logging.html
+https://httpd.apache.org/docs/1.3/logs.html
+
+
+Combined Log Format
+RemoteHost
+identd
+REMOTE_USER
+timestamp
+(offset)
+method + file + protocol
+status code
+size
+referer
+????
+user agent
+forwarded for
+
+*/

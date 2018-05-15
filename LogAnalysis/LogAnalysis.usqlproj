@@ -1,0 +1,40 @@
+﻿<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>90b6211d-0a2b-48ba-9e7d-280ee7f859e4</ProjectGuid>
+    <OutputType>File</OutputType>
+    <AssemblyName>Algebra.xml</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <Name>LogAnalysis</Name>
+    <RootNamespace>LogAnalysis</RootNamespace>
+    <RuntimeVersion>default</RuntimeVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Script Include="Script.usql" />
+    <ScriptCode Include="Script.usql.cs">
+      <DependentUpon>Script.usql</DependentUpon>
+    </ScriptCode>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LogParser\LogParser.csproj">
+      <Name>LogParser</Name>
+      <Project>{ed6911e0-02b2-4ff5-8ece-4616c25dc8f6}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <!-- check for SDK Build target in current path then in USQLSDKPath in the case of command line build -->
+  <Import Project="UsqlSDKBuild.targets" Condition="'$(BuildingInsideVisualStudio)' != 'true' And  Exists('UsqlSDKBuild.targets')" />
+  <Import Project="$(USQLSDKPath)\UsqlSDKBuild.targets" Condition="'$(BuildingInsideVisualStudio)' != 'true' And !Exists('UsqlSDKBuild.targets') And '$(USQLSDKPath)' != '' And Exists('$(USQLSDKPath)\UsqlSDKBuild.targets')" />
+  <!-- backward compatible with IDE build -->
+  <Import Project="$(AppData)\Microsoft\DataLake\MsBuild\1.0\Usql.targets" Condition="'$(BuildingInsideVisualStudio)' == 'true'" />
+</Project>

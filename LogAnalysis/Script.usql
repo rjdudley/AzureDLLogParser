@@ -1,0 +1,36 @@
+﻿REFERENCE ASSEMBLY [LogParser];
+
+@input =
+    EXTRACT ip string,
+            identity string,
+            userid string,
+            timestamp string,
+            offset string,
+            request_message string,
+            status_code string,
+            size string,
+            referer string,
+            url string,
+            user_agent string,
+            forwarded string
+    //FROM "adl://linkslogs.azuredatalakestore.net/linkslogs_raw/2017/access.log.45"
+    FROM "adl://linkslogs.azuredatalakestore.net/linkslogs_raw/{*}/access.{*}"
+    USING new LogParser.LogFileReader(Encoding.UTF8, "\n");
+
+
+// https://msdn.microsoft.com/en-us/azure/data-lake-analytics/u-sql/extractor-parameters-u-sql
+
+//@ip =
+//    SELECT COUNT(ip) AS ip_count,
+//           ip
+//    FROM @input
+//    GROUP BY ip;
+
+@ip =
+    SELECT *
+    FROM @input;
+
+OUTPUT @ip
+TO "adl://linkslogs.azuredatalakestore.net/linkslogs_transformed/ip.txt"
+USING Outputters.Csv();
+                    
